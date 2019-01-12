@@ -95,7 +95,7 @@ sub tikz2svg{
 	print PDFLATEX <TEX>;
 	print PDFLATEX $end;
 	close PDFLATEX;
-	close TEX;
+	close TEX if($tex ne "-");
 
 	$svg = "/dev/stdout" if($svg eq "-");
 	print `pdf2svg texput.pdf $svg`;
