@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 ################################################################################
 # tikz2svg.cgi:	TikZ to SVG converter server-side CGI
-# Requires:	pdflatex with standalone and tikz packages, pdf2svg
+# Requires:	pdflatex with standalone and tikz packages, pdf2svg,
 #		Digest::HMAC_SHA1
 # Author:	Huidae Cho
 # Since:	January 12, 2019
