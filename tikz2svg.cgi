@@ -45,14 +45,14 @@ sub tikz2svg{
 	my @lines = split /^/, $tex;
 	my $first;
 	foreach($_ = shift @lines){
-		next if(/^[ \t]*$/);
+		next if /^[ \t]*$/;
 		$first = $_;
 		last;
 	}
 	$first =~ s/^[ \t]+//;
-	die_text("First word not a command") if($first !~ /^\\/);
+	die_text("First word not a command") if $first !~ /^\\/;
 	die_text("Multiple commands on the first line not supported")
-		if($first =~ /\\.*\\/);
+		if $first =~ /\\.*\\/;
 
 	my $type;
 	$_ = $first;
@@ -69,20 +69,20 @@ sub tikz2svg{
 	}
 
 	my ($begin, $end);
-	$begin = $first if($type == 1);
-	$begin = "\\documentclass[tikz]{standalone}\n" if($type >= 2);
-	$begin .= $first if($type == 3);
+	$begin = $first if $type == 1;
+	$begin = "\\documentclass[tikz]{standalone}\n" if $type >= 2;
+	$begin .= $first if $type == 3;
 	if($type >= 4){
 		$begin .= "\\begin{document}\n";
 		$end = "\\end{document}\n";
 	}
-	$begin .= $first if($type == 4);
+	$begin .= $first if $type == 4;
 	if($type >= 5){
 		$begin .= "\\begin{tikzpicture}\n";
 		$end = "\\end{tikzpicture}\n".$end;
 	}
 
-	return unless(chdir "/tmp");
+	return unless chdir "/tmp";
 
 	$tex = "$begin@lines$end";
 
@@ -91,7 +91,7 @@ sub tikz2svg{
 	print PDFLATEX $tex;
 	close PDFLATEX;
 
-	return unless(-f "$jobname.pdf");
+	return unless -f "$jobname.pdf";
 
 	print `$cfg{pdf2svg} $jobname.pdf /dev/stdout`;
 	unlink glob "$jobname.*";
@@ -126,15 +126,15 @@ sub get_var{
 		$var{$v} =~ y/+/ /; $var{$v} =~ s/%0D//g;
 		$var{$v} = decode_url($var{$v});
 	}
-	return %var if($CONTENT_LENGTH eq "" || $CONTENT_LENGTH <= 0);
+	return %var if $CONTENT_LENGTH eq "" || $CONTENT_LENGTH <= 0;
 
 	my $content = "";
 	my $total_len = 0;
 	while(my $buf_len = read STDIN, my $buf, $CONTENT_LENGTH - $total_len){
 		$total_len += $buf_len;
 		$content .= $buf;
-		die_text("Internal errors") if($total_len > $CONTENT_LENGTH);
-		last if($total_len == $CONTENT_LENGTH);
+		die_text("Internal errors") if $total_len > $CONTENT_LENGTH;
+		last if $total_len == $CONTENT_LENGTH;
 	}
 	if($CONTENT_TYPE eq "application/x-www-form-urlencoded"){
 		foreach(split /&/, $content){
@@ -210,23 +210,23 @@ sub get_pbkdf2_key{
 sub hash_password{
 	# hashed password length: 2*8+128=144
 	my ($pw, $salt) = @_;
-	my $salt = generate_salt() unless(defined $salt);
+	my $salt = generate_salt() unless defined $salt;
 	return unpack("H*", $salt).get_pbkdf2_key($pw, $salt);
 }
 
 if(1){
 if(-t STDIN){
 	printf "%s\n", hash_password($cfg{secret})
-		if($#ARGV == 0 && $ARGV[0] eq "key");
+		if $#ARGV == 0 && $ARGV[0] eq "key";
 	exit 0;
 }
 
-die if($REQUEST_METHOD ne "POST");
+die if $REQUEST_METHOD ne "POST";
 }
 
 my %var = get_var();
 my $salt = int(time/300);
-die if($var{key} ne hash_password($cfg{secret}, $salt));
+die if $var{key} ne hash_password($cfg{secret}, $salt);
 
 print "Content-Type: image/svg+xml\n\n";
 tikz2svg($var{tex}, $var{jobname});

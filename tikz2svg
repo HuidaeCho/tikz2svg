@@ -50,7 +50,7 @@ sub tikz2svg{
 
 	my $first;
 	while(<TEX>){
-		next if(/^[ \t]*$/);
+		next if /^[ \t]*$/;
 		$first = $_;
 		last;
 	}
@@ -75,14 +75,14 @@ sub tikz2svg{
 	}
 
 	my ($begin, $end);
-	$begin = $first if($type == 1);
-	$begin = "\\documentclass[tikz]{standalone}\n" if($type >= 2);
-	$begin .= $first if($type == 3);
+	$begin = $first if $type == 1;
+	$begin = "\\documentclass[tikz]{standalone}\n" if $type >= 2;
+	$begin .= $first if $type == 3;
 	if($type >= 4){
 		$begin .= "\\begin{document}\n";
 		$end = "\\end{document}\n";
 	}
-	$begin .= $first if($type == 4);
+	$begin .= $first if $type == 4;
 	if($type >= 5){
 		$begin .= "\\begin{tikzpicture}\n";
 		$end = "\\end{tikzpicture}\n".$end;
@@ -93,9 +93,9 @@ sub tikz2svg{
 	print PDFLATEX <TEX>;
 	print PDFLATEX $end;
 	close PDFLATEX;
-	close TEX if($tex ne "-");
+	close TEX if $tex ne "-";
 
-	$svg = "/dev/stdout" if($svg eq "-");
+	$svg = "/dev/stdout" if $svg eq "-";
 	print `pdf2svg texput.pdf $svg`;
 
 	unlink glob "texput.*";
