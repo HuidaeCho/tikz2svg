@@ -150,7 +150,7 @@ secret => "tikz2svg.cgi and tikz2svgc share this secret for communication. Chang
 
 ### .htaccess
 
-It is very important to secure ``.tikz2svgrc`` if it is not outside a web-serviceable directory.
+It is very important to secure .tikz2svgrc if it is not outside a web-serviceable directory.
 
 ```apache
 RewriteEngine On
