@@ -4,7 +4,37 @@ Tikz2svg is a simple Perl script that converts a TikZ file written in LaTeX to S
 
 ## Usage
 
-tikz2svg tries to handle the following different formats: `\documentclass{`non-`standalone}`, `\documentclass{standalone}`, `\begin{document}`, `\begin{tikzpicture}` or `\tikz`, and just TikZ commands.
+```bash
+# help
+tikz2svg -h
+tikz2svg --help
+
+# file to file
+tikz2svg input.tex output.svg
+
+# file to stdout
+tikz2svg input.tex
+tikz2svg input.tex > output.svg
+tikz2svg input.tex -			# equivalent to tikz2svg input.tex
+tikz2svg input.tex - > output.svg	# equivalent to tikz2svg input.tex > output.svg
+
+# stdin to file
+tikz2svg - output.svg			# prompt
+tikz2svg - output.svg < input.tex
+
+# stdin to stdout
+tikz2svg				# prompt
+tikz2svg > output.svg			# prompt
+tikz2svg - output.svg			# prompt
+tikz2svg < input.tex > output.svg
+tikz2svg < input.tex
+tikz2svg - < input.tex			# equivalent to tikz2svg < input.tex
+tikz2svg - - < input.tex		# equivalent to tikz2svg < input.tex
+```
+
+## Input formats
+
+tikz2svg tries to handle the following input formats: `\documentclass{`non-`standalone}`, `\documentclass{standalone}`, `\begin{document}`, `\begin{tikzpicture}` or `\tikz`, and just TikZ commands.
 
 ### Non-standalone document class
 
