@@ -51,8 +51,6 @@ sub tikz2svg{
 	}
 	$first =~ s/^[ \t]+//;
 	die_text("First word not a command") if $first !~ /^\\/;
-	die_text("Multiple commands on the first line not supported")
-		if $first =~ /\\.*\\/;
 
 	my $type;
 	$_ = $first;
