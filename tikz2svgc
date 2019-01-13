@@ -30,6 +30,8 @@
 # SUCH DAMAGE.
 ################################################################################
 use strict;
+# If you use the cPanel control panel, you may need this line
+#use cPanelUserConfig; $ENV{HOME} = "/home/username"; # Change this to yours
 eval "use IO::Socket::SSL;1" or die "IO::Socket::SSL missing" ;
 eval "use Digest::HMAC_SHA1 qw(hmac_sha1);1" or die "Digest::HMAC_SHA1 missing" ;
 
