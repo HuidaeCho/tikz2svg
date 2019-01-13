@@ -82,7 +82,7 @@ sub tikz2svg{
 		$end = "\\end{tikzpicture}\n".$end;
 	}
 
-	return unless chdir "/tmp";
+	return unless(chdir "/tmp");
 
 	$tex = "$begin@lines$end";
 
@@ -91,7 +91,7 @@ sub tikz2svg{
 	print PDFLATEX $tex;
 	close PDFLATEX;
 
-	return unless -f "$jobname.pdf";
+	return unless(-f "$jobname.pdf");
 
 	print `$cfg{pdf2svg} $jobname.pdf /dev/stdout`;
 	unlink glob "$jobname.*";
@@ -210,7 +210,7 @@ sub get_pbkdf2_key{
 sub hash_password{
 	# hashed password length: 2*8+128=144
 	my ($pw, $salt) = @_;
-	my $salt = generate_salt() unless defined $salt;
+	my $salt = generate_salt() unless(defined $salt);
 	return unpack("H*", $salt).get_pbkdf2_key($pw, $salt);
 }
 

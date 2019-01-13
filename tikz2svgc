@@ -68,7 +68,7 @@ sub get_pbkdf2_key{
 sub hash_password{
 	# hashed password length: 2*8+128=144
 	my ($pw, $salt) = @_;
-	my $salt = generate_salt() unless defined $salt;
+	my $salt = generate_salt() unless(defined $salt);
 	return unpack("H*", $salt).get_pbkdf2_key($pw, $salt);
 }
 
@@ -95,7 +95,7 @@ my $src;
 		die "$tex: File not found";
 	}
 	$src = encode_url_most(<TEX>);
-	close TEX unless $tex eq "-";
+	close TEX unless($tex eq "-");
 }
 
 my $salt = int(time/300);
@@ -151,4 +151,4 @@ while(<$client>){
 		print SVG $chunk;
 	}
 }
-close SVG unless $svg eq "-";
+close SVG unless($svg eq "-");
