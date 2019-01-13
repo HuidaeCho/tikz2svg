@@ -1,0 +1,9 @@
+# tikz2svg.cgi settings
+pdflatex => "/path/to/pdflatex",
+pdf2svg => "/path/to/pdf2svg",
+
+# tikz2svgc setting
+server => "https://example.com/tikz2svg.cgi",
+
+# tikz2svg.cgi and tikz2svgc setting
+secret => "tikz2svg.cgi and tikz2svgc share this secret for communication. Change this to your choice.",

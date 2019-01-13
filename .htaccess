@@ -1,0 +1,14 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+# Allow your IP addresses only
+Order Allow,Deny
+Allow from 127.0.0.1
+
+# Secure your .tikz2svgrc
+<Files ~ "^\.">
+	Deny from all
+</Files>

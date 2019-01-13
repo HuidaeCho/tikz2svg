@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 ################################################################################
-# tikz2svg:	TikZ to SVG Converter
+# tikz2svg:	TikZ to SVG converter
 # Requires:	pdflatex with standalone and tikz packages, pdf2svg
 # Author:	Huidae Cho
 # Since:	January 12, 2019
