@@ -82,7 +82,7 @@ sub tikz2svg{
 
 	return unless chdir "/tmp";
 
-	$tex = "$begin@lines$end";
+	$tex = "$begin$tex$end";
 
 	local $" = "";
 	open PDFLATEX, "| $cfg{pdflatex} -jobname=$jobname -- > $jobname.tikz2svg.log";
