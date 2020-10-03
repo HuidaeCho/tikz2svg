@@ -87,6 +87,7 @@ sub tikz2svg{
 		$begin .= "\\begin{tikzpicture}\n";
 		$end = "\\end{tikzpicture}\n".$end;
 	}
+	$begin .= $first if $type == 5;
 
 	open PDFLATEX, "| pdflatex -- > /dev/null";
 	print PDFLATEX $begin;

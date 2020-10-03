@@ -79,10 +79,11 @@ sub tikz2svg{
 		$begin .= "\\begin{tikzpicture}\n";
 		$end = "\\end{tikzpicture}\n".$end;
 	}
+	$begin .= $first if $type == 5;
 
 	return unless chdir "/tmp";
 
-	$tex = "$begin$tex$end";
+	$tex = "$begin@lines$end";
 
 	local $" = "";
 	open PDFLATEX, "| $cfg{pdflatex} -jobname=$jobname -- > $jobname.tikz2svg.log";
