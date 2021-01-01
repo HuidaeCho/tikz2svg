@@ -61,7 +61,7 @@ sub tikz2svg{
 	}
 
 	my $type;
-	$_ = $first;
+	($_ = $first) =~ s/%.*//;
 	if(/^\\documentclass.*\{standalone\}/){
 		$type = 1;
 	}elsif(/^\\documentclass/ && !/\{standalone\}/){

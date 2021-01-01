@@ -53,7 +53,7 @@ sub tikz2svg{
 	die_text("First word not a command") if $first !~ /^\\/;
 
 	my $type;
-	$_ = $first;
+	($_ = $first) =~ s/%.*//;
 	if(/^\\documentclass.*\{standalone\}/){
 		$type = 1;
 	}elsif(/^\\documentclass/ && !/\{standalone\}/){
