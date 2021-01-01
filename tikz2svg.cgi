@@ -45,11 +45,11 @@ sub tikz2svg{
 	my @lines = split /^/, $tex;
 	my $first;
 	foreach($_ = shift @lines){
-		next if /^[ \t]*$/;
+		next if /^[ \t]*(?:%.*)?$/;
 		$first = $_;
 		last;
 	}
-	$first =~ s/^[ \t]+//;
+	$first =~ s/^[ \t]+|[\r\n]+//g;
 	die_text("First word not a command") if $first !~ /^\\/;
 
 	my $type;

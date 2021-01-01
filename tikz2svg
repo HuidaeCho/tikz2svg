@@ -50,18 +50,18 @@ sub tikz2svg{
 
 	my $first;
 	while(<TEX>){
-		next if /^[ \t]*$/;
+		next if /^[ \t]*(?:%.*)?$/;
 		$first = $_;
 		last;
 	}
-	$first =~ s/^[ \t]+//;
+	$first =~ s/^[ \t]+|[\r\n]+//g;
 	if($first !~ /^\\/){
-		print STDERR "First word not a command\n";
+		print STDERR "$first: First word not a command\n";
 		exit 1;
 	}
 
 	my $type;
-	($_ = $first) =~ s/%.*//;
+	($_ = $first) =~ s/%.*$//;
 	if(/^\\documentclass.*\{standalone\}/){
 		$type = 1;
 	}elsif(/^\\documentclass/ && !/\{standalone\}/){
