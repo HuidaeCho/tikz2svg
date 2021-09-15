@@ -135,12 +135,10 @@ die $status unless $status eq "HTTP/1.1 200 OK$eol";
 
 my $body_started = 0;
 while(<$client>){
-	if($_ eq $eol){
-		$body_started = 1;
-		next;
-	}
 	unless($body_started){
-		if(/^Content-Type:/){
+		if($_ eq $eol){
+			$body_started = 1;
+		}elsif(/^Content-Type:/){
 			die "Unexpected content type"
 				if $_ ne "Content-Type: image/svg+xml$eol";
 		}elsif(/^Transfer-Encoding:/){
@@ -149,8 +147,11 @@ while(<$client>){
 		}
 	}else{
 		(my $chunk_length = $_) =~ s/$eol$//;
-		read $client, my $chunk, hex($chunk_length);
-		print SVG $chunk;
+		$chunk_length = hex($chunk_length);
+		while($chunk_length > 0){
+			$chunk_length -= read $client, my $chunk, $chunk_length;
+			print SVG $chunk;
+		}
 	}
 }
 close SVG unless $svg eq "-";
