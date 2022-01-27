@@ -44,7 +44,7 @@ sub tikz2svg{
 
 	my @lines = split /^/, $tex;
 	my $first;
-	foreach($_ = shift @lines){
+	while($_ = shift @lines){
 		next if /^[ \t]*(?:%.*)?$/;
 		$first = $_;
 		last;
